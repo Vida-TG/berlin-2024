@@ -1,0 +1,23 @@
+.my-bets-page {
+    text-align: center;
+    padding: 20px;
+}
+
+.bets-title {
+    font-size: 2.5em;
+    margin-bottom: 20px;
+}
+
+.bets-list {
+    list-style: none;
+    padding: 0;
+}
+
+.bets-list li {
+    background-color: #ffffff82;
+    padding: 10px;
+    border-radius: 10px;
+    margin: 10px 0;
+    box-shadow: 3px 1px 10px rgba(0, 0, 0, 0.14);
+}
+

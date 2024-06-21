@@ -1,0 +1,48 @@
+.header {
+    z-index: 10;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 20px;
+    background-color: #1a2933;
+    box-shadow: 0 2px 4px #0000001a;
+    position: fixed;
+    box-sizing: border-box;
+    width: 100%;
+    top: 0;
+  }
+  
+  .logo img {
+    display: none;
+  }
+  
+  .searchbar input {
+    padding: 8px 20px;
+    border-radius: 10px;
+    font-size: 20px;
+    background-color: transparent;
+    font-weight: 600;
+    border: 2px solid #121212;
+    color: #98A7B5;
+    outline: none;
+  }
+  
+  .wallet-button {
+    display: flex;
+    align-items: center;
+  }
+  
+  @media (max-width: 768px) {
+    .searchbar {
+      display: none;
+    }
+    .header {
+      position: relative;
+    }
+    
+    .logo img {
+      display: block;
+      height: 70px;
+    }
+  }
+  

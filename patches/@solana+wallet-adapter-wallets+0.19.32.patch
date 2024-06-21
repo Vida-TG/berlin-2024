@@ -1,0 +1,48 @@
+diff --git a/node_modules/@solana/wallet-adapter-wallets/lib/cjs/index.js b/node_modules/@solana/wallet-adapter-wallets/lib/cjs/index.js
+index 2810a94..7482fbe 100644
+--- a/node_modules/@solana/wallet-adapter-wallets/lib/cjs/index.js
++++ b/node_modules/@solana/wallet-adapter-wallets/lib/cjs/index.js
+@@ -27,7 +27,6 @@ __exportStar(require("@solana/wallet-adapter-huobi"), exports);
+ __exportStar(require("@solana/wallet-adapter-hyperpay"), exports);
+ __exportStar(require("@solana/wallet-adapter-keystone"), exports);
+ __exportStar(require("@solana/wallet-adapter-krystal"), exports);
+-__exportStar(require("@solana/wallet-adapter-ledger"), exports);
+ __exportStar(require("@solana/wallet-adapter-mathwallet"), exports);
+ __exportStar(require("@solana/wallet-adapter-neko"), exports);
+ __exportStar(require("@solana/wallet-adapter-nightly"), exports);
+diff --git a/node_modules/@solana/wallet-adapter-wallets/lib/esm/index.js b/node_modules/@solana/wallet-adapter-wallets/lib/esm/index.js
+index acee4a3..639ead0 100644
+--- a/node_modules/@solana/wallet-adapter-wallets/lib/esm/index.js
++++ b/node_modules/@solana/wallet-adapter-wallets/lib/esm/index.js
+@@ -11,7 +11,6 @@ export * from '@solana/wallet-adapter-huobi';
+ export * from '@solana/wallet-adapter-hyperpay';
+ export * from '@solana/wallet-adapter-keystone';
+ export * from '@solana/wallet-adapter-krystal';
+-export * from '@solana/wallet-adapter-ledger';
+ export * from '@solana/wallet-adapter-mathwallet';
+ export * from '@solana/wallet-adapter-neko';
+ export * from '@solana/wallet-adapter-nightly';
+diff --git a/node_modules/@solana/wallet-adapter-wallets/lib/types/index.d.ts b/node_modules/@solana/wallet-adapter-wallets/lib/types/index.d.ts
+index 0223b19..41d3dbd 100644
+--- a/node_modules/@solana/wallet-adapter-wallets/lib/types/index.d.ts
++++ b/node_modules/@solana/wallet-adapter-wallets/lib/types/index.d.ts
+@@ -11,7 +11,6 @@ export * from '@solana/wallet-adapter-huobi';
+ export * from '@solana/wallet-adapter-hyperpay';
+ export * from '@solana/wallet-adapter-keystone';
+ export * from '@solana/wallet-adapter-krystal';
+-export * from '@solana/wallet-adapter-ledger';
+ export * from '@solana/wallet-adapter-mathwallet';
+ export * from '@solana/wallet-adapter-neko';
+ export * from '@solana/wallet-adapter-nightly';
+diff --git a/node_modules/@solana/wallet-adapter-wallets/src/index.ts b/node_modules/@solana/wallet-adapter-wallets/src/index.ts
+index 0ebece9..8d05f5a 100644
+--- a/node_modules/@solana/wallet-adapter-wallets/src/index.ts
++++ b/node_modules/@solana/wallet-adapter-wallets/src/index.ts
+@@ -11,7 +11,6 @@ export * from '@solana/wallet-adapter-huobi';
+ export * from '@solana/wallet-adapter-hyperpay';
+ export * from '@solana/wallet-adapter-keystone';
+ export * from '@solana/wallet-adapter-krystal';
+-export * from '@solana/wallet-adapter-ledger';
+ export * from '@solana/wallet-adapter-mathwallet';
+ export * from '@solana/wallet-adapter-neko';
+ export * from '@solana/wallet-adapter-nightly';

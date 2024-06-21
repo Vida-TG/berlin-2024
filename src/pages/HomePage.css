@@ -1,0 +1,185 @@
+/* src/pages/HomePage.css */
+.home-container {
+  box-sizing: border-box;
+  background-color: #1a2933;
+  border-radius: 8px;
+  padding: 20px;
+  color: #98A7B5;
+  font-family: 'Arial', sans-serif;
+}
+
+.hero-section {
+  position: relative;
+  text-align: center;
+  margin-bottom: 20px;
+  padding: 60px 20px;
+  border-radius: 8px;
+  background-color: rgba(0, 0, 0, 0.1);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  min-height: 300px;
+}
+
+.hero-background {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: url('https://img.uefa.com/imgml/uefacom/euro2024/rebrand/logo-portrait.png') no-repeat center;
+  background-size: contain;
+  opacity: 0.04;
+  z-index: 0;
+  border-radius: 8px;
+}
+
+.hero-content {
+  position: relative;
+  z-index: 1;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  color: #E0E0E0;
+}
+
+.team-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 20px;
+}
+
+.home-team {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.flag-large {
+  width: 100px;
+  height: 75px;
+  margin-bottom: 10px;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+h1 {
+  font-size: 20px;
+  margin: 10px 0;
+}
+
+h2 {
+  font-size: 24px;
+  margin: 10px 0;
+  color: #E0E0E0;
+}
+
+.match-details {
+  margin-top: 20px;
+  font-size: 18px;
+}
+
+.home-content {
+  text-align: center;
+}
+
+.bet-title {
+  font-size: 24px;
+  margin-bottom: 20px;
+}
+
+.match-list {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+}
+
+.match-item {
+  background-color: #2a3b3f;
+  padding: 10px 20px;
+  border-radius: 8px;
+  width: 100%;
+  max-width: 500px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  text-align: center;
+}
+
+.match-item p {
+  margin: 10px 0;
+}
+
+.bet-btn {
+  background-color: #4CAF50;
+  color: #1a2933;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 16px;
+}
+
+.bet-btn:hover {
+  background-color: #45a049;
+}
+
+@media (max-width: 460px) {
+  .team-container {
+    flex-direction: column;
+    gap: 5px;
+  }
+}
+
+@media (min-width: 1200px) {
+  .team-container {
+    flex-direction: row;
+    justify-content: space-around;
+  }
+
+  .hero-content {
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-around;
+    margin-top: 40px; /* Adjust to move content downwards */
+  }
+
+  .home-team {
+    align-items: center;
+  }
+
+  h1 {
+    font-size: 24px; /* Increase font size */
+  }
+
+  h2 {
+    font-size: 28px; /* Increase font size */
+    margin: 0 20px;
+  }
+
+  .flag-large {
+    width: 120px; /* Increase flag size */
+    height: 90px; /* Increase flag size */
+  }
+}
+
+@media (min-width: 1024px) {
+  .hero-content {
+    margin-top: 60px; /* Further adjust for larger screens */
+  }
+
+  h1 {
+    font-size: 28px; /* Further increase font size */
+  }
+
+  h2 {
+    font-size: 32px; /* Further increase font size */
+  }
+
+  .flag-large {
+    width: 140px; /* Further increase flag size */
+    height: 105px; /* Further increase flag size */
+  }
+}

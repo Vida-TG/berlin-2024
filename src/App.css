@@ -1,0 +1,43 @@
+body {
+    margin: 0;
+    font-family: 'Comic Neue', sans-serif;
+    background-color: #1b2a2f;
+    color: #ffffff;
+  }
+  
+  .app-container {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    margin-top: 70px;
+    margin-bottom: -70px;
+    background-color: #091923;
+  }
+  
+  .main-content {
+    display: flex;
+    flex: 1;
+  }
+  
+  .content {
+    flex: 1;
+    background-color: #091923;
+    border-radius: 8px;
+    margin: 10px;
+    margin-left: 280px;
+  }
+  
+  @media (max-width: 768px) {
+    .main-content {
+      flex-direction: column;
+    }
+    .content {
+      margin-left: 10px;
+    }
+    
+  .app-container {
+    margin: 0px;
+  }
+  
+  }
+  
