@@ -72,7 +72,7 @@ const BetForm = ({ match, closePopup }) => {
             <div className="popup-content">
                 <button className="close-btn" onClick={closePopup}>X</button>
                 <h2>Place Your Bet</h2>
-                {connected && <p>Your Balance: {balance} Berlin Tokens</p>}
+                {connected && <p>Your Balance: {balance} BERLIN</p>}
                 <form onSubmit={handleSubmit}>
                     <div className="form-group">
                         <label htmlFor="team">Select Team:</label>
