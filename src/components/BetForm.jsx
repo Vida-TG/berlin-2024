@@ -1,27 +1,69 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import { useWallet } from "@solana/wallet-adapter-react";
+import { getTokenBalance, handleStake } from './solana';
 import './BetForm.css';
 
 const BetForm = ({ match, closePopup }) => {
-    const [stake, setStake] = useState('');
+    const { publicKey, connected } = useWallet();
+    const [stakes, setStakes] = useState(1); // Default to 1 stake
     const [team, setTeam] = useState('');
+    const [balance, setBalance] = useState(0);
 
-    const handleStakeChange = (e) => {
-        setStake(e.target.value);
-    };
+    useEffect(() => {
+        if (connected && publicKey) {
+            (async () => {
+                const balance = await getTokenBalance(publicKey);
+                setBalance(balance.berlin);
+            })();
+        }
+    }, [connected, publicKey]);
 
     const handleTeamChange = (e) => {
         setTeam(e.target.value);
     };
 
-    const handleSubmit = (e) => {
+    const handleStakesChange = (e) => {
+        setStakes(e.target.value);
+    };
+
+    const handleSubmit = async (e) => {
         e.preventDefault();
-        const stakeInt = parseInt(stake, 10);
-        if (stakeInt >= 1 && Number.isInteger(stakeInt)) {
-            // Handle bet submission
-            console.log(`Bet placed on ${team} with a stake of ${stakeInt} million tokens`);
-            closePopup();
+        const totalTokens = stakes * 1000000;
+
+        if (totalTokens > balance) {
+            alert('Insufficient balance to place this bet.');
+            return;
+        }
+
+        if (connected && publicKey) {
+            try {
+                await handleStake(publicKey, stakes * 1000000);
+                const response = await fetch('http://localhost:8000/api/place-bet', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        userWallet: publicKey.toString(),
+                        matchId: match._id,
+                        team,
+                        stake: totalTokens
+                    })
+                });
+
+                if (response.ok) {
+                    console.log(`Bet placed on ${team} with a stake of ${stakes} million tokens`);
+                    closePopup();
+                } else {
+                    const errorData = await response.json();
+                    alert('Error placing bet: ' + errorData.message);
+                }
+            } catch (error) {
+                console.error('Error placing bet:', error);
+                alert('Error placing bet: ' + error.message);
+            }
         } else {
-            alert('Stake must be in multiples of 1 million tokens');
+            alert('Please connect your wallet');
         }
     };
 
@@ -30,6 +72,7 @@ const BetForm = ({ match, closePopup }) => {
             <div className="popup-content">
                 <button className="close-btn" onClick={closePopup}>X</button>
                 <h2>Place Your Bet</h2>
+                {connected && <p>Your Balance: {balance} Berlin Tokens</p>}
                 <form onSubmit={handleSubmit}>
                     <div className="form-group">
                         <label htmlFor="team">Select Team:</label>
@@ -40,17 +83,12 @@ const BetForm = ({ match, closePopup }) => {
                         </select>
                     </div>
                     <div className="form-group">
-                        <label htmlFor="stake">Stake (in million tokens):</label>
-                        <input 
-                            type="number" 
-                            id="stake" 
-                            value={stake} 
-                            onChange={handleStakeChange} 
-                            min="1000000" 
-                            step="1000000" 
-                            placeholder="Enter stake" 
-                            required 
-                        />
+                        <label htmlFor="stakes">Number of Stakes (1M Berlin each):</label>
+                        <select id="stakes" value={stakes} onChange={handleStakesChange} required>
+                            {[...Array(10)].map((_, index) => (
+                                <option key={index} value={index + 1}>{index + 1}</option>
+                            ))}
+                        </select>
                     </div>
                     <button type="submit" className="submit-btn">Place Bet</button>
                 </form>
@@ -58,6 +96,5 @@ const BetForm = ({ match, closePopup }) => {
         </div>
     );
 };
-
 
 export default BetForm;
