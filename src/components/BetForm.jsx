@@ -4,7 +4,7 @@ import { getTokenBalance, handleStake } from './solana';
 import './BetForm.css';
 
 const BetForm = ({ match, closePopup }) => {
-    const { publicKey, connected } = useWallet();
+    const { publicKey, connected, wallet } = useWallet();
     const [stakes, setStakes] = useState(1); // Default to 1 stake
     const [team, setTeam] = useState('');
     const [balance, setBalance] = useState(0);
@@ -37,7 +37,7 @@ const BetForm = ({ match, closePopup }) => {
 
         if (connected && publicKey) {
             try {
-                await handleStake(publicKey, stakes * 1000000);
+                await handleStake(publicKey, wallet, stakes*1000000);
                 const response = await fetch('https://berlin-backend.onrender.com/api/place-bet', {
                     method: 'POST',
                     headers: {
