@@ -11,7 +11,7 @@ const HomePage = ({ matches }) => {
     useEffect(() => {
         const fetchMatches = async () => {
             try {
-                const response = await fetch('http://localhost:8000/api/matches');
+                const response = await fetch('https://berlin-backend.onrender.com/api/matches');
                 const result = await response.json();
                 setSavedMatches(result);
             } catch (error) {

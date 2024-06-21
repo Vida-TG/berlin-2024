@@ -23,7 +23,7 @@ const AdminPage = ({ token }) => {
 
     const fetchMatches = async () => {
         try {
-            const response = await fetch('http://localhost:8000/api/matches', {
+            const response = await fetch('https://berlin-backend.onrender.com/api/matches', {
                 headers: { 'Authorization': `${token}` }
             });
             const data = await response.json();
@@ -36,7 +36,7 @@ const AdminPage = ({ token }) => {
     const handleAddMatch = async (e) => {
         e.preventDefault();
         try {
-            const response = await fetch('http://localhost:8000/api/add-match', {
+            const response = await fetch('https://berlin-backend.onrender.com/api/add-match', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -68,7 +68,7 @@ const AdminPage = ({ token }) => {
 
     const handleDeleteMatch = async (id) => {
         try {
-            const response = await fetch(`http://localhost:8000/api/delete-match/${id}`, {
+            const response = await fetch(`https://berlin-backend.onrender.com/api/delete-match/${id}`, {
                 method: 'DELETE',
                 headers: {
                     'Authorization': `Bearer ${token}`

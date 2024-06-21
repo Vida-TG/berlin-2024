@@ -14,7 +14,7 @@ const AddAdmin = () => {
         setSuccess('');
 
         try {
-            const response = await fetch('http://localhost:8000/api/add-admin', {
+            const response = await fetch('https://berlin-backend.onrender.com/api/add-admin', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',

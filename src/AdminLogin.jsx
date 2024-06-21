@@ -10,7 +10,7 @@ const AdminLogin = ({ setToken }) => {
     const handleLogin = async (e) => {
         e.preventDefault();
         try {
-            const response = await fetch('http://localhost:8000/api/admin-login', {
+            const response = await fetch('https://berlin-backend.onrender.com/api/admin-login', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
