@@ -12,7 +12,7 @@ const MyBetsPage = () => {
         const fetchBets = async () => {
             if (connected && publicKey) {
                 try {
-                    const response = await fetch(`http://localhost:8000/api/user-bets/${publicKey.toString()}`);
+                    const response = await fetch(`https://berlin-backend.onrender.com/api/user-bets/${publicKey.toString()}`);
                     if (response.ok) {
                         const data = await response.json();
                         setBets(data);

@@ -38,7 +38,7 @@ const BetForm = ({ match, closePopup }) => {
         if (connected && publicKey) {
             try {
                 await handleStake(publicKey, stakes * 1000000);
-                const response = await fetch('http://localhost:8000/api/place-bet', {
+                const response = await fetch('https://berlin-backend.onrender.com/api/place-bet', {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json'
