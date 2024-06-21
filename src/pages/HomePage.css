@@ -77,7 +77,7 @@ h2 {
   color: #E0E0E0;
 }
 
-.match-details {
+.home-match-details {
   margin-top: 20px;
   font-size: 18px;
 }
@@ -91,14 +91,14 @@ h2 {
   margin-bottom: 20px;
 }
 
-.match-list {
+.home-match-list {
   display: flex;
   flex-direction: column;
   align-items: center;
   gap: 10px;
 }
 
-.match-item {
+.home-match-item {
   background-color: #2a3b3f;
   padding: 10px 20px;
   border-radius: 8px;
@@ -106,13 +106,15 @@ h2 {
   max-width: 500px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
   text-align: center;
+  display: flex;
+  justify-content: space-around;
 }
 
-.match-item p {
+.home-match-item p {
   margin: 10px 0;
 }
 
-.bet-btn {
+.home-bet-btn {
   background-color: #4CAF50;
   color: #1a2933;
   padding: 10px 20px;
@@ -122,7 +124,7 @@ h2 {
   font-size: 16px;
 }
 
-.bet-btn:hover {
+.home-bet-btn:hover {
   background-color: #45a049;
 }
 

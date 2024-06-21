@@ -54,7 +54,7 @@ const HomePage = ({ matches }) => {
                                 <h1>{titleCase(featuredMatch.teamB.team.name)}</h1>
                             </div>
                         </div>
-                        <div className="match-details">
+                        <div className="home-match-details">
                             {featuredMatch.isFinished ? (
                                 <>
                                     <p>Final Score: {featuredMatch.teamA.score} - {featuredMatch.teamB.score}</p>
@@ -75,11 +75,11 @@ const HomePage = ({ matches }) => {
             <div className="home-content">
                 <h1 className="bet-title">Place Your Bet</h1>
                 {matchToBet && <BetForm match={matchToBet} closePopup={closePopup} />}
-                <div className="match-list">
+                <div className="home-match-list">
                     {savedMatches.map((match) => (
-                        <div key={match._id} className="match-item">
-                            <p>Match on {new Date(match.date).toLocaleString()} at {match.city}</p>
-                            <button className="bet-btn" onClick={() => setMatchToBet(match)}>Bet Now</button>
+                        <div key={match._id} className="home-match-item">
+                            <p>{match.teamA} vs {match.teamB} {new Date(match.date).toLocaleString()}</p>
+                            <button className="home-bet-btn" onClick={() => setMatchToBet(match)}>Bet Now</button>
                         </div>
                     ))}
                 </div>
