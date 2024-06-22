@@ -1,33 +1,48 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import './MatchList.css';
 
-const MatchList = ({ matches }) => {
-    const [selectedDate, setSelectedDate] = useState();
-    if (!matches.message) {
-        const today = new Date();
-        const filteredMatches = matches
-            .filter(match => {
-                const matchDate = new Date(match.date);
-                return !match.isFinished && matchDate > today;
-            })
-            .sort((a, b) => new Date(a.date) - new Date(b.date));
-    
-        const groupedMatches = filteredMatches.reduce((acc, match) => {
-            const matchDate = new Date(match.date).toLocaleDateString();
-            if (!acc[matchDate]) {
-                acc[matchDate] = [];
+const MatchList = () => {
+    const [matches, setMatches] = useState([]);
+    const [selectedDate, setSelectedDate] = useState('');
+    const [groupedMatches, setGroupedMatches] = useState({});
+
+    useEffect(() => {
+        const fetchMatches = async () => {
+            try {
+                const response = await fetch('https://berlin-backend.onrender.com/api/matches');
+                const result = await response.json();
+                setMatches(result);
+            } catch (error) {
+                console.error(error);
             }
-            acc[matchDate].push(match);
-            return acc;
-        }, {});
-    
-        setSelectedDate(Object.keys(groupedMatches)[0]);
-    } else {
-        return (<>No match available</>)
-    }
+        };
+
+        fetchMatches();
+    }, []);
+
+    useEffect(() => {
+        if (matches.length > 0) {
+            const groupedMatchesByDate = matches.reduce((acc, match) => {
+                const matchDate = new Date(match.date).toLocaleDateString();
+                if (!acc[matchDate]) {
+                    acc[matchDate] = [];
+                }
+                acc[matchDate].push(match);
+                return acc;
+            }, {});
+
+            setGroupedMatches(groupedMatchesByDate);
+            setSelectedDate(Object.keys(groupedMatchesByDate)[0]);
+        }
+    }, [matches]);
+
     const titleCase = (str) => {
         return str.toLowerCase().split(' ').map(word => word.charAt(0).toUpperCase() + word.slice(1)).join(' ');
     };
+
+    if (matches.length === 0) {
+        return <p>No matches available</p>;
+    }
 
     return (
         <div className="match-list-container">
@@ -43,21 +58,25 @@ const MatchList = ({ matches }) => {
                 ))}
             </div>
             <div className="match-list">
-                {groupedMatches[selectedDate].map(match => (
-                    <div className="match-card" key={match._id}>
-                        <div className="teams">
-                            <div className="team">
-                                <img src={`/flags/${match.teamA.team.name}.png`} alt={`${match.teamA.team.name} flag`} className="flag" />
-                                <h3>{titleCase(match.teamA.team.name)}</h3>
-                            </div>
-                            <div className="vs">vs</div>
-                            <div className="team">
-                                <img src={`/flags/${match.teamB.team.name}.png`} alt={`${match.teamB.team.name} flag`} className="flag" />
-                                <h3>{titleCase(match.teamB.team.name)}</h3>
+                {groupedMatches[selectedDate] ? (
+                    groupedMatches[selectedDate].map(match => (
+                        <div className="match-card" key={match._id}>
+                            <div className="teams">
+                                <div className="team">
+                                    <img src={`/flags/${match.teamA.toLowerCase()}.png`} alt={`${match.teamA} flag`} className="flag" />
+                                    <h3>{titleCase(match.teamA)}</h3>
+                                </div>
+                                <div className="vs">vs</div>
+                                <div className="team">
+                                    <img src={`/flags/${match.teamB.toLowerCase()}.png`} alt={`${match.teamB} flag`} className="flag" />
+                                    <h3>{titleCase(match.teamB)}</h3>
+                                </div>
                             </div>
                         </div>
-                    </div>
-                ))}
+                    ))
+                ) : (
+                    <p>No matches available for the selected date.</p>
+                )}
             </div>
         </div>
     );

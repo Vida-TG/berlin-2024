@@ -53,6 +53,10 @@
     background-color: #c82333;
 }
 
+.admin-table-container {
+    overflow-x: scroll;
+}
+
 .admin-table {
     width: 100%;
     border-collapse: collapse;

@@ -1,10 +1,10 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faHome, faFutbol, faTicketAlt, faGift, faTrophy } from '@fortawesome/free-solid-svg-icons';
+import { faHome, faFutbol, faTicketAlt, faGift, faTrophy, faUserShield } from '@fortawesome/free-solid-svg-icons';
 import './Sidebar.css';
 
-const Sidebar = () => {
+const Sidebar = ({ token }) => {
   return (
     <aside className="sidebar">
       <div className="sidebar-logo">
@@ -14,6 +14,9 @@ const Sidebar = () => {
         <Link to="/"><span><FontAwesomeIcon icon={faHome} /></span> <span>Home</span></Link>
         <Link to="/matches"><span><FontAwesomeIcon icon={faFutbol} /></span> <span>Matches</span></Link>
         <Link to="/my-bets"><span><FontAwesomeIcon icon={faTicketAlt} /></span> <span>My Bets</span></Link>
+        {token && (
+          <Link to="/admin/admin"><span><FontAwesomeIcon icon={faUserShield} /></span> <span>ADMIN❗</span></Link>
+        )}
       </nav>
     </aside>
   );

@@ -161,48 +161,50 @@ const AdminPage = ({ token }) => {
                     <button type="submit">Add Match</button>
                 </form>
                 <button className="delete-all-btn" onClick={handleDeleteMatchesWithoutBets}>Delete Matches Without Bets</button>
-                <table className="admin-table">
-                    <thead>
-                        <tr>
-                            <th>Team A</th>
-                            <th>Team B</th>
-                            <th>Date</th>
-                            <th>Finished</th>
-                            <th>Score</th>
-                            <th>Winner</th>
-                            <th>Deactivate</th>
-                            <th>Actions</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {matches.map(match => (
-                            <tr key={match._id}>
-                                <td>{match.teamA}</td>
-                                <td>{match.teamB}</td>
-                                <td>{new Date(match.date).toLocaleString()}</td>
-                                <td>
-                                    <input 
-                                        type="checkbox" 
-                                        checked={match.isFinished} 
-                                        onChange={(e) => handleUpdateMatch(match._id, e.target.checked, match.teamAScore, match.teamBScore, match.winningTeam, match.deactivated)} 
-                                    />
-                                </td>
-                                <td>{match.teamAScore} - {match.teamBScore}</td>
-                                <td>{match.winningTeam}</td>
-                                <td>
-                                    <input 
-                                        type="checkbox" 
-                                        checked={match.deactivated} 
-                                        onChange={(e) => handleUpdateMatch(match._id, match.isFinished, match.teamAScore, match.teamBScore, match.winningTeam, e.target.checked)} 
-                                    />
-                                </td>
-                                <td>
-                                    <button className="delete-button" onClick={() => handleDeleteMatch(match._id)}>Delete</button>
-                                </td>
+                <div className='admin-table-container'>
+                    <table className="admin-table">
+                        <thead>
+                            <tr>
+                                <th>Team A</th>
+                                <th>Team B</th>
+                                <th>Date</th>
+                                <th>Finished</th>
+                                <th>Score</th>
+                                <th>Winner</th>
+                                <th>Deactivate</th>
+                                <th>Actions</th>
                             </tr>
-                        ))}
-                    </tbody>
-                </table>
+                        </thead>
+                        <tbody>
+                            {matches.map(match => (
+                                <tr key={match._id}>
+                                    <td>{match.teamA}</td>
+                                    <td>{match.teamB}</td>
+                                    <td>{new Date(match.date).toLocaleString()}</td>
+                                    <td>
+                                        <input 
+                                            type="checkbox" 
+                                            checked={match.isFinished} 
+                                            onChange={(e) => handleUpdateMatch(match._id, e.target.checked, match.teamAScore, match.teamBScore, match.winningTeam, match.deactivated)} 
+                                        />
+                                    </td>
+                                    <td>{match.teamAScore} - {match.teamBScore}</td>
+                                    <td>{match.winningTeam}</td>
+                                    <td>
+                                        <input 
+                                            type="checkbox" 
+                                            checked={match.deactivated} 
+                                            onChange={(e) => handleUpdateMatch(match._id, match.isFinished, match.teamAScore, match.teamBScore, match.winningTeam, e.target.checked)} 
+                                        />
+                                    </td>
+                                    <td>
+                                        <button className="delete-button" onClick={() => handleDeleteMatch(match._id)}>Delete</button>
+                                    </td>
+                                </tr>
+                            ))}
+                        </tbody>
+                    </table>
+                </div>
             </div>
         </div>
     );
