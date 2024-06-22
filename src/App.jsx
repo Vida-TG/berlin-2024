@@ -9,6 +9,7 @@ import AddAdmin from './AddAdmin';
 import Header from './components/Header';
 import Footer from './components/Footer';
 import Sidebar from './components/Sidebar';
+import TopWinnersPage from './pages/TopWinnersPage';
 import './App.css';
 
 const App = () => {
@@ -28,6 +29,7 @@ const App = () => {
                             <Route path="/admin/login" element={<AdminLogin setToken={setToken} />} />
                             <Route path="/admin/admin" element={<AdminPage token={token} />} />
                             <Route path="/admin/add-admin" element={<AddAdmin />} />
+                            <Route path="/top-winners" element={<TopWinnersPage />} />
                         </Routes>
                     </div>
                 </div>

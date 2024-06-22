@@ -1,0 +1,30 @@
+.top-winners-page {
+    padding: 20px;
+    text-align: center;
+}
+
+.winners-list {
+    list-style-type: none;
+    padding: 0;
+    margin: 20px auto;
+    max-width: 600px;
+}
+
+.winner-item {
+    display: flex;
+    justify-content: space-between;
+    padding: 10px;
+    margin: 10px 0;
+    color: #333;
+    background-color: #f0f0f0;
+    border-radius: 8px;
+}
+
+.winner-wallet {
+    font-weight: bold;
+}
+
+.winner-stake {
+    color: #4CAF50;
+    font-weight: bold;
+}
