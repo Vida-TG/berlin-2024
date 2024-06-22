@@ -63,6 +63,13 @@ const HomePage = () => {
                             ) : (
                                 <>
                                     <p>Match on {new Date(featuredMatch.date).toLocaleString()}</p>
+                                    <button 
+                                        className={`home-bet-btn ${featuredMatch.deactivated  || new Date(featuredMatch.date) <= new Date() ? 'deactivated' : ''}`} 
+                                        onClick={() => setMatchToBet(featuredMatch)}
+                                        disabled={featuredMatch.isFinished || featuredMatch.deactivated || new Date(featuredMatch.date) <= new Date()}
+                                    >
+                                        {featuredMatch.isFinished ? 'Completed' : (featuredMatch.deactivated || new Date(featuredMatch.date) <= new Date()) ? 'Disabled' : 'Bet Now'}
+                                    </button>
                                 </>
                             )}
                         </div>
@@ -82,11 +89,11 @@ const HomePage = () => {
                                 <p className="scoreline">{match.teamAScore} - {match.teamBScore}</p>
                             ) : (
                                 <button 
-                                    className={`home-bet-btn ${match.deactivated ? 'deactivated' : ''}`} 
+                                    className={`home-bet-btn ${match.deactivated  || new Date(match.date) <= new Date() ? 'deactivated' : ''}`} 
                                     onClick={() => setMatchToBet(match)}
                                     disabled={match.isFinished || match.deactivated || new Date(match.date) <= new Date()}
                                 >
-                                    {match.isFinished ? 'Completed' : match.deactivated ? 'Disabled' : 'Bet Now'}
+                                    {match.isFinished ? 'Completed' : (match.deactivated || new Date(match.date) <= new Date()) ? 'Disabled' : 'Bet Now'}
                                 </button>
                             )}
                         </div>
