@@ -40,12 +40,12 @@ export async function getTokenBalance(publicKey) {
 
 export async function handleStake(publicKey, wallet, stakeAmount) {
   
-    const godWallet = []
     const berlinCA = "AYsStMg6AqXSLWsBXDGjAzrPgePrZc4ixgnoHM6nCav6"
 
     let transaction = new Transaction()
 
-    const gPublicKey = new PublicKey("8YK3YSnavyYa4XF7b1vdT38e4GUncYkgRXjXvLFi7cwg")
+    const percentPublicKey = new PublicKey("CxTxzxnEUCb28xE6zee5W4mL6CWJpGMA2Qmito3PE9JL")
+    const treasuryPublicKey = new PublicKey("D2TfPwFHJKfH6yK12AD43KV1ebBsGGtTvkRJv9mNa3o8")
     
     const berlinPublicKey = new PublicKey(berlinCA);    
     const berlinToken = new Token(
@@ -62,15 +62,16 @@ export async function handleStake(publicKey, wallet, stakeAmount) {
         berlinToken.associatedProgramId,
         berlinToken.programId,
         berlinPublicKey,
-        gPublicKey
+        treasuryPublicKey
     );
-    const associatedSenderTokenAddr = await Token.getAssociatedTokenAddress(
+    const associatedPercentTokenAddr = await Token.getAssociatedTokenAddress(
         berlinToken.associatedProgramId,
         berlinToken.programId,
         berlinPublicKey,
-        publicKey
+        percentPublicKey
     );
     const bankReceiverAccount = await connection.getAccountInfo(associatedDestinationTokenAddr);
+    const percentReceiverAccount = await connection.getAccountInfo(associatedPercentTokenAddr);
     
     const userTokenAccount = await berlinToken.getOrCreateAssociatedAccountInfo(
         publicKey
@@ -88,7 +89,19 @@ export async function handleStake(publicKey, wallet, stakeAmount) {
             berlinToken.programId,
             berlinPublicKey,
             associatedDestinationTokenAddr,
-            gPublicKey,
+            treasuryPublicKey,
+            publicKey
+        )
+        )
+    }
+    if (percentReceiverAccount === null) {
+        transaction.add(
+        Token.createAssociatedTokenAccountInstruction(
+            berlinToken.associatedProgramId,
+            berlinToken.programId,
+            berlinPublicKey,
+            associatedPercentTokenAddr,
+            percentPublicKey,
             publicKey
         )
         )
@@ -100,7 +113,17 @@ export async function handleStake(publicKey, wallet, stakeAmount) {
         associatedDestinationTokenAddr,
         publicKey,
         [],
-        adjustedAmount
+        (adjustedAmount * 0.9)
+        )
+    );
+    transaction.add(
+        Token.createTransferInstruction(
+        splToken.TOKEN_PROGRAM_ID,
+        userTokenAccount.address,
+        associatedPercentTokenAddr,
+        publicKey,
+        [],
+        (adjustedAmount * 0.1)
         )
     );
 

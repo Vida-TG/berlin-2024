@@ -72,7 +72,7 @@ const BetForm = ({ match, closePopup }) => {
             <div className="popup-content">
                 <button className="close-btn" onClick={closePopup}>X</button>
                 <h2>Place Your Bet</h2>
-                {connected && <p>Your Balance: {balance} BERLIN</p>}
+                {connected && <p>Your Balance: {balance.toLocaleString()} BERLIN</p>}
                 <form onSubmit={handleSubmit}>
                     <div className="form-group">
                         <label htmlFor="team">Select Team:</label>
@@ -83,7 +83,7 @@ const BetForm = ({ match, closePopup }) => {
                         </select>
                     </div>
                     <div className="form-group">
-                        <label htmlFor="stakes">Number of Stakes (1M Berlin each):</label>
+                        <label htmlFor="stakes">Number of Stakes (1M BERLIN each):</label>
                         <select id="stakes" value={stakes} onChange={handleStakesChange} required>
                             {[...Array(10)].map((_, index) => (
                                 <option key={index} value={index + 1}>{index + 1}</option>

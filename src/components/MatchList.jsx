@@ -2,25 +2,29 @@ import React, { useState } from 'react';
 import './MatchList.css';
 
 const MatchList = ({ matches }) => {
-    const today = new Date();
-    const filteredMatches = matches
-        .filter(match => {
-            const matchDate = new Date(match.date);
-            return !match.isFinished && matchDate > today;
-        })
-        .sort((a, b) => new Date(a.date) - new Date(b.date));
-
-    const groupedMatches = filteredMatches.reduce((acc, match) => {
-        const matchDate = new Date(match.date).toLocaleDateString();
-        if (!acc[matchDate]) {
-            acc[matchDate] = [];
-        }
-        acc[matchDate].push(match);
-        return acc;
-    }, {});
-
-    const [selectedDate, setSelectedDate] = useState(Object.keys(groupedMatches)[0]);
-
+    const [selectedDate, setSelectedDate] = useState();
+    if (!matches.message) {
+        const today = new Date();
+        const filteredMatches = matches
+            .filter(match => {
+                const matchDate = new Date(match.date);
+                return !match.isFinished && matchDate > today;
+            })
+            .sort((a, b) => new Date(a.date) - new Date(b.date));
+    
+        const groupedMatches = filteredMatches.reduce((acc, match) => {
+            const matchDate = new Date(match.date).toLocaleDateString();
+            if (!acc[matchDate]) {
+                acc[matchDate] = [];
+            }
+            acc[matchDate].push(match);
+            return acc;
+        }, {});
+    
+        setSelectedDate(Object.keys(groupedMatches)[0]);
+    } else {
+        return (<>No match available</>)
+    }
     const titleCase = (str) => {
         return str.toLowerCase().split(' ').map(word => word.charAt(0).toUpperCase() + word.slice(1)).join(' ');
     };

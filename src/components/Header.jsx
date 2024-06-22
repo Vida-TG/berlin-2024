@@ -23,7 +23,7 @@ const Header = () => {
                 <img src="https://img.uefa.com/imgml/uefacom/euro2024/rebrand/logo-portrait.png" alt="Euro 2024" />
             </div>
             <div className="wallet-button">
-                {connected && <span>Balance: {balance} BERLIN</span>}
+                {connected && <span style={{fontSize:"12px", marginRight:"5px"}}>Balance: {balance.toLocaleString()} BERLIN</span>}
                 <WalletMultiButton />
             </div>
         </header>

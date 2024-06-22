@@ -1,9 +1,8 @@
-// src/pages/HomePage.js
 import React, { useState, useEffect } from 'react';
 import BetForm from '../components/BetForm';
 import './HomePage.css';
 
-const HomePage = ({ matches }) => {
+const HomePage = () => {
     const [savedMatches, setSavedMatches] = useState([]);
     const [featuredMatch, setFeaturedMatch] = useState(null);
     const [matchToBet, setMatchToBet] = useState(null);
@@ -23,11 +22,11 @@ const HomePage = ({ matches }) => {
     }, []);
 
     useEffect(() => {
-        if (matches.length > 0) {
-            const randomMatch = matches[Math.floor(Math.random() * matches.length)];
+        if (savedMatches.length > 0) {
+            const randomMatch = savedMatches[Math.floor(Math.random() * savedMatches.length)];
             setFeaturedMatch(randomMatch);
         }
-    }, [matches]);
+    }, [savedMatches]);
 
     const titleCase = (str) => {
         return str.toLowerCase().split(' ').map(word => word.charAt(0).toUpperCase() + word.slice(1)).join(' ');
@@ -45,25 +44,24 @@ const HomePage = ({ matches }) => {
                     <div className="hero-content">
                         <div className="team-container">
                             <div className="home-team">
-                                <img src={`/flags/${featuredMatch.teamA.team.name}.png`} alt={`${featuredMatch.teamA.team.name} flag`} className="flag-large" />
-                                <h1>{titleCase(featuredMatch.teamA.team.name)}</h1>
+                                <img src={`/flags/${featuredMatch.teamA.toLowerCase()}.png`} alt={`${featuredMatch.teamA} flag`} className="flag-large" />
+                                <h1>{titleCase(featuredMatch.teamA)}</h1>
                             </div>
                             <h2>vs</h2>
                             <div className="home-team">
-                                <img src={`/flags/${featuredMatch.teamB.team.name}.png`} alt={`${featuredMatch.teamB.team.name} flag`} className="flag-large" />
-                                <h1>{titleCase(featuredMatch.teamB.team.name)}</h1>
+                                <img src={`/flags/${featuredMatch.teamB.toLowerCase()}.png`} alt={`${featuredMatch.teamB} flag`} className="flag-large" />
+                                <h1>{titleCase(featuredMatch.teamB)}</h1>
                             </div>
                         </div>
                         <div className="home-match-details">
                             {featuredMatch.isFinished ? (
                                 <>
-                                    <p>Final Score: {featuredMatch.teamA.score} - {featuredMatch.teamB.score}</p>
+                                    <p>Final Score: {featuredMatch.teamAScore} - {featuredMatch.teamBScore}</p>
                                     <p>Winner: {titleCase(featuredMatch.winningTeam)}</p>
                                 </>
                             ) : (
                                 <>
                                     <p>Match on {new Date(featuredMatch.date).toLocaleString()}</p>
-                                    <p>at {titleCase(featuredMatch.stadium)}, {titleCase(featuredMatch.city)}</p>
                                 </>
                             )}
                         </div>
@@ -79,7 +77,17 @@ const HomePage = ({ matches }) => {
                     {savedMatches.map((match) => (
                         <div key={match._id} className="home-match-item">
                             <p>{match.teamA} vs {match.teamB} {new Date(match.date).toLocaleString()}</p>
-                            <button className="home-bet-btn" onClick={() => setMatchToBet(match)}>Bet Now</button>
+                            {match.isFinished ? (
+                                <p className="scoreline">{match.teamAScore} - {match.teamBScore}</p>
+                            ) : (
+                                <button 
+                                    className={`home-bet-btn ${match.deactivated ? 'deactivated' : ''}`} 
+                                    onClick={() => setMatchToBet(match)}
+                                    disabled={match.isFinished || match.deactivated || new Date(match.date) <= new Date()}
+                                >
+                                    {match.isFinished ? 'Completed' : match.deactivated ? 'Disabled' : 'Bet Now'}
+                                </button>
+                            )}
                         </div>
                     ))}
                 </div>
