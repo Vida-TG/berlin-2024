@@ -37,7 +37,7 @@ const BetForm = ({ match, closePopup }) => {
 
         if (connected && publicKey) {
             try {
-                await handleStake(publicKey, wallet, stakes*1000000);
+                await handleStake(publicKey, wallet, totalTokens);
                 const response = await fetch('https://berlin-backend.onrender.com/api/place-bet', {
                     method: 'POST',
                     headers: {
@@ -78,8 +78,9 @@ const BetForm = ({ match, closePopup }) => {
                         <label htmlFor="team">Select Team:</label>
                         <select id="team" value={team} onChange={handleTeamChange} required>
                             <option value="" disabled>Select a team</option>
-                            <option value={match.teamA}>{match.teamA}</option>
-                            <option value={match.teamB}>{match.teamB}</option>
+                            <option value={match.teamA}>{match.teamA} to win</option>
+                            <option value={match.teamB}>{match.teamB} to win</option>
+                            <option value="draw">Draw</option>
                         </select>
                     </div>
                     <div className="form-group">

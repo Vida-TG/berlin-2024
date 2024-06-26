@@ -45,9 +45,10 @@ const MyBetsPage = () => {
             <ul className="bets-list">
                 {bets.map((bet, index) => (
                     <li key={index}>
-                        <p>Team: {bet.team}</p>
-                        <p>Stake: ${bet.stake}</p>
+                        <p>{bet.team === "draw" ? `${bet.matchId.teamA} and ${bet.matchId.teamB} to draw` : `${bet.team} to win`}</p>
+                        <p>Stake: ${bet.stake.toLocaleDateString()} BERLIN</p>
                         <p>Date: {new Date(bet.createdAt).toLocaleDateString()}</p>
+                        <p>Status: {bet.matchId.isFinished ? (bet.winning ? 'Won' : 'Lost') : 'Open'}</p>
                     </li>
                 ))}
             </ul>

@@ -20,6 +20,7 @@ const AdminPage = ({ token }) => {
         winningTeam: '',
         deactivated: false
     });
+    const [editedMatch, setEditedMatch] = useState({});
 
     useEffect(() => {
         fetchMatches();
@@ -116,7 +117,18 @@ const AdminPage = ({ token }) => {
         }
     };
 
-    const handleUpdateMatch = async (id, isFinished, teamAScore, teamBScore, winningTeam, deactivated) => {
+    const handleEditMatch = (id, field, value) => {
+        setEditedMatch((prev) => ({
+            ...prev,
+            [id]: {
+                ...prev[id],
+                [field]: value,
+            }
+        }));
+    };
+
+    const handleUpdateMatch = async (id) => {
+        const { isFinished, teamAScore, teamBScore, winningTeam, deactivated } = editedMatch[id] || {};
         try {
             const response = await fetch(`https://berlin-backend.onrender.com/api/update-match/${id}`, {
                 method: 'PUT',
@@ -172,7 +184,8 @@ const AdminPage = ({ token }) => {
                                 <th>Score</th>
                                 <th>Winner</th>
                                 <th>Deactivate</th>
-                                <th>Actions</th>
+                                <th>Delete</th>
+                                <th>Update</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -184,21 +197,48 @@ const AdminPage = ({ token }) => {
                                     <td>
                                         <input 
                                             type="checkbox" 
-                                            checked={match.isFinished} 
-                                            onChange={(e) => handleUpdateMatch(match._id, e.target.checked, match.teamAScore, match.teamBScore, match.winningTeam, match.deactivated)} 
+                                            checked={editedMatch[match._id]?.isFinished ?? match.isFinished} 
+                                            onChange={(e) => handleEditMatch(match._id, 'isFinished', e.target.checked)}
                                         />
                                     </td>
-                                    <td>{match.teamAScore} - {match.teamBScore}</td>
-                                    <td>{match.winningTeam}</td>
+                                    <td>
+                                        <input 
+                                            type="number" 
+                                            value={editedMatch[match._id]?.teamAScore ?? match.teamAScore} 
+                                            onChange={(e) => handleEditMatch(match._id, 'teamAScore', e.target.value)} 
+                                            disabled={!editedMatch[match._id]?.isFinished && !match.isFinished} 
+                                        />
+                                        <input 
+                                            type="number" 
+                                            value={editedMatch[match._id]?.teamBScore ?? match.teamBScore} 
+                                            onChange={(e) => handleEditMatch(match._id, 'teamBScore', e.target.value)} 
+                                            disabled={!editedMatch[match._id]?.isFinished && !match.isFinished} 
+                                        />
+                                    </td>
+                                    <td>
+                                        <select 
+                                            value={editedMatch[match._id]?.winningTeam ?? match.winningTeam} 
+                                            onChange={(e) => handleEditMatch(match._id, 'winningTeam', e.target.value)} 
+                                            disabled={!editedMatch[match._id]?.isFinished && !match.isFinished}
+                                        >
+                                            <option value="">Select Winner</option>
+                                            <option value={match.teamA}>{match.teamA}</option>
+                                            <option value={match.teamB}>{match.teamB}</option>
+                                            <option value="draw">Draw</option>
+                                        </select>
+                                    </td>
                                     <td>
                                         <input 
                                             type="checkbox" 
-                                            checked={match.deactivated} 
-                                            onChange={(e) => handleUpdateMatch(match._id, match.isFinished, match.teamAScore, match.teamBScore, match.winningTeam, e.target.checked)} 
+                                            checked={editedMatch[match._id]?.deactivated ?? match.deactivated} 
+                                            onChange={(e) => handleEditMatch(match._id, 'deactivated', e.target.checked)}
                                         />
                                     </td>
                                     <td>
-                                        <button className="delete-button" onClick={() => handleDeleteMatch(match._id)}>Delete</button>
+                                        <button onClick={() => handleDeleteMatch(match._id)}>Delete</button>
+                                    </td>
+                                    <td>
+                                        <button onClick={() => handleUpdateMatch(match._id)}>Update</button>
                                     </td>
                                 </tr>
                             ))}
