@@ -15,19 +15,19 @@ const MyBetsPage = () => {
                     const response = await fetch(`https://berlin-backend.onrender.com/api/user-bets/${publicKey.toString()}`);
                     if (response.ok) {
                         const data = await response.json();
+                        setLoading(false);
                         setBets(data);
                     } else {
                         const errorData = await response.json();
                         setError(errorData.message);
                     }
                 } catch (error) {
-                    setError(error.message);
-                } finally {
                     setLoading(false);
+                    setError(error.message);
                 }
             }
         };
-
+        
         fetchBets();
     }, [connected, publicKey]);
 
@@ -45,8 +45,8 @@ const MyBetsPage = () => {
             <ul className="bets-list">
                 {bets.map((bet, index) => (
                     <li key={index}>
-                        <p>{bet.team === "draw" ? `${bet.matchId.teamA} and ${bet.matchId.teamB} to draw` : `${bet.team} to win`}</p>
-                        <p>Stake: ${bet.stake.toLocaleDateString()} BERLIN</p>
+                        <p>{bet.team === "draw" ? `${bet.matchId.teamA} And ${bet.matchId.teamB} To Draw` : `${bet.team} To Win`}</p>
+                        <p>Stake: {bet.stake} BERLIN</p>
                         <p>Date: {new Date(bet.createdAt).toLocaleDateString()}</p>
                         <p>Status: {bet.matchId.isFinished ? (bet.winning ? 'Won' : 'Lost') : 'Open'}</p>
                     </li>
