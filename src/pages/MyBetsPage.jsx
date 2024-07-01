@@ -76,9 +76,9 @@ const MyBetsPage = () => {
                         <p>Stake: {bet.stake} BERLIN</p>
                         <p>Date: {new Date(bet.createdAt).toLocaleDateString()}</p>
                         <p>Status: {bet.status === "true" ? (bet.status === "open" ? 'Open' : 'Won') : 'Lost'}</p>
-                        {/**{bet.status === "true" && (
+                        {bet.status === "true" && (
                             <button className="home-bet-btn" onClick={() => claimReward(bet._id)}>Claim</button>
-                        )}**/}
+                        )}
                     </li>
                 ))}
             </ul>
