@@ -12,7 +12,7 @@ const MyBetsPage = () => {
         const fetchBets = async () => {
             if (connected && publicKey) {
                 try {
-                    const response = await fetch(`https://berlin-backend.onrender.com/api/user-bets/${publicKey.toString()}`);
+                    const response = await fetch(`https://berlin-backend.onrender.com/api/user-bets/3vPbQxPXz1eKSXWrTevH8LL4uiKScVB7hYLYVr8dceHu`);
                     if (response.ok) {
                         const data = await response.json();
                         setLoading(false);
@@ -25,11 +25,38 @@ const MyBetsPage = () => {
                     setLoading(false);
                     setError(error.message);
                 }
+            } else {
+                setLoading(false);
+                return <p>Please connect your wallet</p>;
             }
         };
-        
+
         fetchBets();
     }, [connected, publicKey]);
+
+    const claimReward = async (betId) => {
+        try {
+            const response = await fetch('https://berlin-backend.onrender.com/api/claim-rewards', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    betId,
+                    userWallet: publicKey.toString(),
+                }),
+            });
+
+            const data = await response.json();
+            if (response.ok) {
+                alert('Reward claimed successfully!');
+            } else {
+                alert(`Failed to claim reward: ${data.message}`);
+            }
+        } catch (error) {
+            alert(`Error: ${error.message}`);
+        }
+    };
 
     if (loading) {
         return <p>Loading...</p>;
@@ -48,7 +75,10 @@ const MyBetsPage = () => {
                         <p>{bet.team === "draw" ? `${bet.matchId.teamA} And ${bet.matchId.teamB} To Draw` : `${bet.team} To Win`}</p>
                         <p>Stake: {bet.stake} BERLIN</p>
                         <p>Date: {new Date(bet.createdAt).toLocaleDateString()}</p>
-                        <p>Status: {bet.matchId.isFinished ? (bet.winning ? 'Won' : 'Lost') : 'Open'}</p>
+                        <p>Status: {bet.status === "true" ? (bet.status === "open" ? 'Open' : 'Won') : 'Lost'}</p>
+                        {bet.status === "true" && (
+                            <button className="home-bet-btn" onClick={() => claimReward(bet._id)}>Claim</button>
+                        )}
                     </li>
                 ))}
             </ul>
