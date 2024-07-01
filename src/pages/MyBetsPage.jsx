@@ -49,7 +49,7 @@ const MyBetsPage = () => {
 
             const data = await response.json();
             if (response.ok) {
-                alert('Reward claimed successfully!');
+                alert(`Reward claimed successfully! You earned ${data.betReward} BERLIN`);
             } else {
                 alert(`Could not to claim your reward`);
             }
