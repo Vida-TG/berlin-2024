@@ -12,7 +12,7 @@ const MyBetsPage = () => {
         const fetchBets = async () => {
             if (connected && publicKey) {
                 try {
-                    const response = await fetch(`https://berlin-backend.onrender.com/api/user-bets/3vPbQxPXz1eKSXWrTevH8LL4uiKScVB7hYLYVr8dceHu`);
+                    const response = await fetch(`https://berlin-backend.onrender.com/api/user-bets/${publicKey.toString()}`);
                     if (response.ok) {
                         const data = await response.json();
                         setLoading(false);
@@ -51,7 +51,7 @@ const MyBetsPage = () => {
             if (response.ok) {
                 alert('Reward claimed successfully!');
             } else {
-                alert(`Failed to claim reward: ${data.message}`);
+                alert(`Could not to claim your reward`);
             }
         } catch (error) {
             alert(`Error: ${error.message}`);
